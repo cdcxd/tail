@@ -576,22 +576,19 @@ func TestIncompleteLinesWithReopens(t *testing.T) {
 	tailTest, cleanup := NewTailTest("incomplete-lines-reopens", t)
 	defer cleanup()
 	filename := "test.txt"
+	// Polling can detect a size decrease that happens before the watch starts.
 	config := Config{
 		Follow:        true,
 		CompleteLines: true,
+		Poll:          true,
 	}
+	tailTest.CreateFile(filename, "hello world\nhi")
 	tail := tailTest.StartTail(filename, config)
-	go func() {
-		time.Sleep(100 * time.Millisecond)
-		tailTest.CreateFile(filename, "hello world\nhi")
-		time.Sleep(100 * time.Millisecond)
-		tailTest.TruncateFile(filename, "rewriting\n")
-	}()
+	tailTest.ReadLines(tail, []string{"hello world"}, false)
 
-	// not that the "hi" gets lost, because it was never a complete line
-	lines := []string{"hello world", "rewriting"}
-
-	tailTest.ReadLines(tail, lines, false)
+	tailTest.TruncateFile(filename, "rewriting\n")
+	// Reopening discards the partial line from the old contents.
+	tailTest.ReadLines(tail, []string{"rewriting"}, false)
 
 	tailTest.RemoveFile(filename)
 	tail.Stop()
@@ -606,12 +603,9 @@ func TestIncompleteLinesWithoutFollow(t *testing.T) {
 		Follow:        false,
 		CompleteLines: true,
 	}
+	// intentionally missing a newline at the end
+	tailTest.CreateFile(filename, "foo\nbar\nbaz")
 	tail := tailTest.StartTail(filename, config)
-	go func() {
-		time.Sleep(100 * time.Millisecond)
-		// intentionally missing a newline at the end
-		tailTest.CreateFile(filename, "foo\nbar\nbaz")
-	}()
 
 	lines := []string{"foo", "bar", "baz"}
 

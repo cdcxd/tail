@@ -6,7 +6,7 @@
 //program. The library comes with full support for truncation/move detection as
 //it is designed to work with log rotation tools. The library works on all
 //operating systems supported by Go, including POSIX systems like Linux and
-//*BSD, and MS Windows. Go 1.9 is the oldest compiler release supported.
+//*BSD, and MS Windows. Go 1.18 is the oldest compiler release supported.
 package tail
 
 import (
@@ -102,6 +102,9 @@ type Tail struct {
 
 	watcher watch.FileWatcher
 	changes *watch.FileChanges
+
+	reopenPending bool     // Switch files after draining the current reader.
+	replacement   *os.File // Opened when the move was detected, if it existed.
 
 	tomb.Tomb // provides: Done, Kill, Dying
 
@@ -199,6 +202,10 @@ var errStopAtEOF = errors.New("tail: stop at eof")
 func (tail *Tail) close() {
 	close(tail.Lines)
 	tail.closeFile()
+	if tail.replacement != nil {
+		tail.replacement.Close()
+		tail.replacement = nil
+	}
 }
 
 func (tail *Tail) closeFile() {
@@ -214,6 +221,10 @@ func (tail *Tail) reopen() error {
 	}
 	tail.closeFile()
 	tail.lineNum = 0
+	if tail.replacement != nil {
+		tail.file, tail.replacement = tail.replacement, nil
+		return nil
+	}
 	for {
 		var err error
 		tail.file, err = OpenFile(tail.Filename)
@@ -314,13 +325,23 @@ func (tail *Tail) tailFileSync() {
 				// file when rate limit is reached.
 				msg := ("Too much log activity; waiting a second before resuming tailing")
 				offset, _ := tail.Tell()
-				tail.Lines <- &Line{msg, tail.lineNum, SeekInfo{Offset: offset}, time.Now(), errors.New(msg)}
+				select {
+				case tail.Lines <- &Line{msg, tail.lineNum, SeekInfo{Offset: offset}, time.Now(), errors.New(msg)}:
+				case <-tail.Dying():
+					return
+				}
 				select {
 				case <-time.After(time.Second):
 				case <-tail.Dying():
 					return
 				}
-				if err := tail.seekEnd(); err != nil {
+				// A pending reopen lets us skip the remaining old lines.
+				if tail.reopenPending {
+					err = tail.reopenAfterMove()
+				} else {
+					err = tail.seekEnd()
+				}
+				if err != nil {
 					tail.Kill(err)
 					return
 				}
@@ -368,16 +389,32 @@ func (tail *Tail) tailFileSync() {
 	}
 }
 
-// waitForChanges waits until the file has been appended, deleted,
-// moved or truncated. When moved or deleted - the file will be
-// reopened if ReOpen is true. Truncated files are always reopened.
+// openFileWatcher compares the watched path with the open file's identity.
+type openFileWatcher interface {
+	ChangeEventsFile(*tomb.Tomb, *os.File, int64) (*watch.FileChanges, error)
+}
+
+// waitForChanges waits at EOF for a file change or completes a pending reopen.
 func (tail *Tail) waitForChanges() error {
+	if tail.reopenPending {
+		select {
+		case <-tail.Dying():
+			// Stop, or StopAtEOF at the end of the old file.
+			return ErrStop
+		default:
+		}
+		return tail.reopenAfterMove()
+	}
 	if tail.changes == nil {
 		pos, err := tail.file.Seek(0, io.SeekCurrent)
 		if err != nil {
 			return err
 		}
-		tail.changes, err = tail.watcher.ChangeEvents(&tail.Tomb, pos)
+		if w, ok := tail.watcher.(openFileWatcher); ok {
+			tail.changes, err = w.ChangeEventsFile(&tail.Tomb, tail.file, pos)
+		} else {
+			tail.changes, err = tail.watcher.ChangeEvents(&tail.Tomb, pos)
+		}
 		if err != nil {
 			return err
 		}
@@ -388,15 +425,26 @@ func (tail *Tail) waitForChanges() error {
 		return nil
 	case <-tail.changes.Deleted:
 		tail.changes = nil
-		if tail.ReOpen {
-			// XXX: we must not log from a library.
-			tail.Logger.Printf("Re-opening moved/deleted file %s ...", tail.Filename)
-			if err := tail.reopen(); err != nil {
-				return err
+		if _, ok := tail.watcher.(openFileWatcher); ok && tail.ReOpen {
+			// Bound the drain by the old file's current size.
+			// Open the replacement now to keep it if it moves during
+			// the drain. The watcher detects that move by comparing
+			// the path with the open replacement.
+			if fi, err := tail.file.Stat(); err == nil && fi.Mode().IsRegular() {
+				if pos, err := tail.file.Seek(0, io.SeekCurrent); err == nil {
+					tail.lk.Lock()
+					tail.reader.Reset(io.LimitReader(tail.file, fi.Size()-pos))
+					tail.lk.Unlock()
+				}
 			}
-			tail.Logger.Printf("Successfully reopened %s", tail.Filename)
-			tail.openReader()
+			if f, err := OpenFile(tail.Filename); err == nil {
+				tail.replacement = f
+			}
+			tail.reopenPending = true
 			return nil
+		}
+		if tail.ReOpen {
+			return tail.reopenAfterMove()
 		}
 		tail.Logger.Printf("Stopping tail as file no longer exists: %s", tail.Filename)
 		return ErrStop
@@ -412,6 +460,19 @@ func (tail *Tail) waitForChanges() error {
 	case <-tail.Dying():
 		return ErrStop
 	}
+}
+
+// reopenAfterMove switches to the replacement, waiting for it if needed.
+func (tail *Tail) reopenAfterMove() error {
+	tail.reopenPending = false
+	// XXX: we must not log from a library.
+	tail.Logger.Printf("Re-opening moved/deleted file %s ...", tail.Filename)
+	if err := tail.reopen(); err != nil {
+		return err
+	}
+	tail.Logger.Printf("Successfully reopened %s", tail.Filename)
+	tail.openReader()
+	return nil
 }
 
 func (tail *Tail) openReader() {

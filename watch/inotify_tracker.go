@@ -221,6 +221,19 @@ func (shared *InotifyTracker) run() {
 	}
 	shared.watcher = watcher
 
+	// On Windows, Add and Remove wait for fsnotify's event loop.
+	// Drain errors separately so that loop can finish the call.
+	go func() {
+		for err := range watcher.Errors {
+			if err == nil {
+				continue
+			}
+			if sysErr, ok := err.(*os.SyscallError); !ok || sysErr.Err != syscall.EINTR {
+				logger.Printf("Error in Watcher Error channel: %s", err)
+			}
+		}
+	}()
+
 	for {
 		select {
 		case winfo := <-shared.watch:
@@ -234,16 +247,6 @@ func (shared *InotifyTracker) run() {
 				return
 			}
 			shared.sendEvent(event)
-
-		case err, open := <-shared.watcher.Errors:
-			if !open {
-				return
-			} else if err != nil {
-				sysErr, ok := err.(*os.SyscallError)
-				if !ok || sysErr.Err != syscall.EINTR {
-					logger.Printf("Error in Watcher Error channel: %s", err)
-				}
-			}
 		}
 	}
 }

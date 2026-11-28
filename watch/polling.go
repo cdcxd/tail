@@ -9,7 +9,6 @@ import (
 	"runtime"
 	"time"
 
-	"github.com/nxadm/tail/util"
 	"gopkg.in/tomb.v1"
 )
 
@@ -48,12 +47,22 @@ func (fw *PollingFileWatcher) ChangeEvents(t *tomb.Tomb, pos int64) (*FileChange
 	if err != nil {
 		return nil, err
 	}
+	return fw.changeEvents(t, origFi, pos), nil
+}
 
+// ChangeEventsFile reports changes at Filename relative to the open file f.
+// A missing path or a different file is reported as a deletion.
+func (fw *PollingFileWatcher) ChangeEventsFile(t *tomb.Tomb, f *os.File, pos int64) (*FileChanges, error) {
+	origFi, err := f.Stat()
+	if err != nil {
+		return nil, err
+	}
+	return fw.changeEvents(t, origFi, pos), nil
+}
+
+func (fw *PollingFileWatcher) changeEvents(t *tomb.Tomb, origFi os.FileInfo, pos int64) *FileChanges {
 	changes := NewFileChanges()
 	var prevModTime time.Time
-
-	// XXX: use tomb.Tomb to cleanly manage these goroutines. replace
-	// the fatal (below) with tomb's Kill.
 
 	fw.Size = pos
 
@@ -77,8 +86,14 @@ func (fw *PollingFileWatcher) ChangeEvents(t *tomb.Tomb, pos int64) (*FileChange
 					return
 				}
 
-				// XXX: report this error back to the user
-				util.Fatal("Failed to stat file %v: %v", fw.Filename, err)
+				// Stop the tail and report the error from Wait, unless
+				// it is already stopping.
+				select {
+				case <-t.Dying():
+				default:
+					t.Kill(err)
+				}
+				return
 			}
 
 			// File got moved/renamed?
@@ -111,7 +126,7 @@ func (fw *PollingFileWatcher) ChangeEvents(t *tomb.Tomb, pos int64) (*FileChange
 		}
 	}()
 
-	return changes, nil
+	return changes
 }
 
 func init() {
