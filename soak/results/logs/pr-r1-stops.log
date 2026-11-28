@@ -1,0 +1,16 @@
+=== RUN   TestSoakMatrix
+    soak_matrix_test.go:1271: soak matrix: go1.24.6, POLL_DURATION=250ms, scale=1, out=/tmp/tail-pr1-soak/results/pr/r1
+=== RUN   TestSoakMatrix/S08_stop_and_stopateof_during_blocked_drain
+    soak_matrix_test.go:1306: S08 stop_and_stopateof_during_blocked_drain [pr] poll=250ms: 120/360 lines delivered, missing 240, dup 0, misordered 0, unexpected 0, notices 0, hangs 0, deaths 0, iters 30, wall 15110ms
+            Stop: map[blocked_in_sendline:30 err_stopateof:0 file_fds_after_stop:n=30 max=0.0 p90=0.0 mean=0.0 file_fds_during_drain:n=30 max=2.0 p90=2.0 mean=2.0 gate_line_from_old_file:30 gate_line_from_replacement:0 hung:0 latency_us:n=30 max=33.0 p90=21.5 mean=14.8 lines_delivered_after_stop:0 n:30 process_fd_delta:n=30 max=0.0 p90=0.0 mean=0.0 reopened_before_stop:0]
+            StopAtEOF: map[blocked_in_sendline:30 err_stopateof:30 file_fds_after_stop:n=30 max=0.0 p90=0.0 mean=0.0 file_fds_during_drain:n=30 max=2.0 p90=2.0 mean=2.0 gate_line_from_old_file:30 gate_line_from_replacement:0 hung:0 latency_us:n=30 max=24.1 p90=22.8 mean=16.4 lines_delivered_after_stop:0 n:30 process_fd_delta:n=30 max=0.0 p90=0.0 mean=0.0 reopened_before_stop:0]
+            missing_sample: [s8:Stop:1:w2 s8:Stop:1:w3 s8:Stop:1:b1 s8:Stop:1:b2 s8:Stop:2:w2 s8:Stop:2:w3 s8:Stop:2:b1 s8:Stop:2:b2 s8:Stop:3:w2 s8:Stop:3:w3]
+=== RUN   TestSoakMatrix/S12_stop_and_stopateof_during_blocked_rate_limit_notice
+    soak_matrix_test.go:1306: S12 stop_and_stopateof_during_blocked_rate_limit_notice [pr] poll=250ms: 40/40 lines delivered, missing 0, dup 0, misordered 0, unexpected 0, notices 0, hangs 0, deaths 0, iters 10, wall 10ms
+            Stop: map[blocked_in_notice_send:10 err_stopateof:0 hang_bound_ms:2000 hung:0 latency_us:n=10 max=19.4 p90=17.1 mean=14.3 n:10]
+            StopAtEOF: map[blocked_in_notice_send:10 err_stopateof:10 hang_bound_ms:2000 hung:0 latency_us:n=10 max=21.7 p90=21.0 mean=15.7 n:10]
+--- PASS: TestSoakMatrix (15.12s)
+    --- PASS: TestSoakMatrix/S08_stop_and_stopateof_during_blocked_drain (15.11s)
+    --- PASS: TestSoakMatrix/S12_stop_and_stopateof_during_blocked_rate_limit_notice (0.01s)
+PASS
+ok  	github.com/nxadm/tail	15.127s

@@ -1,0 +1,36 @@
+{
+ "scenario": "S03",
+ "name": "300_isolated_rotations_random_0-300ms_pause_seed_1",
+ "version": "pr",
+ "go_version": "go1.24.6",
+ "poll_ms": 250,
+ "iterations": 300,
+ "expected": 1801,
+ "delivered": 1801,
+ "missing": 0,
+ "duplicates": 0,
+ "misordered": 0,
+ "unexpected": 0,
+ "notices": 0,
+ "hangs": 0,
+ "deaths": 0,
+ "aborted": false,
+ "wall_ms": 103843.260566,
+ "extra": {
+  "rename_to_first_replacement_line_ms": {
+   "n": 300,
+   "max": 250.732461,
+   "p90": 218.610761,
+   "mean": 136.26880117666673
+  },
+  "rename_to_last_old_line_ms": {
+   "n": 194,
+   "max": 195.929927,
+   "p90": 177.754234,
+   "mean": 100.43832223711344
+  },
+  "rotations_old_lines_delivered_before_rename": 106,
+  "rotations_with_all_5_old_lines": 300,
+  "stop_ms": 0.01045
+ }
+}

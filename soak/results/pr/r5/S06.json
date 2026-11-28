@@ -1,0 +1,22 @@
+{
+ "scenario": "S06",
+ "name": "deleted_with_unread_lines_recreated_after_500ms",
+ "version": "pr",
+ "go_version": "go1.24.6",
+ "poll_ms": 250,
+ "iterations": 30,
+ "expected": 151,
+ "delivered": 151,
+ "missing": 0,
+ "duplicates": 0,
+ "misordered": 0,
+ "unexpected": 0,
+ "notices": 0,
+ "hangs": 0,
+ "deaths": 0,
+ "aborted": false,
+ "wall_ms": 23851.613596,
+ "extra": {
+  "stop_ms": 0.00892
+ }
+}

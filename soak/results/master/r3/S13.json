@@ -1,0 +1,35 @@
+{
+ "scenario": "S13",
+ "name": "300_back_to_back_rotations_no_wait",
+ "version": "master",
+ "go_version": "go1.24.6",
+ "poll_ms": 250,
+ "iterations": 300,
+ "expected": 601,
+ "delivered": 2,
+ "missing": 599,
+ "duplicates": 0,
+ "misordered": 0,
+ "unexpected": 0,
+ "notices": 0,
+ "hangs": 0,
+ "deaths": 0,
+ "aborted": false,
+ "wall_ms": 1751.814711,
+ "extra": {
+  "burst_ms": 15.1252,
+  "missing_sample": [
+   "r1:a",
+   "g1:a",
+   "r2:a",
+   "g2:a",
+   "r3:a",
+   "g3:a",
+   "r4:a",
+   "g4:a",
+   "r5:a",
+   "g5:a"
+  ],
+  "stop_ms": 0.02442
+ }
+}

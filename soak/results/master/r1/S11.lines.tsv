@@ -1,0 +1,26 @@
+0	15:26:47.319429	g0:a
+1	15:26:47.569883	s11:1:b1
+2	15:26:47.569884	s11:1:b2
+3	15:26:47.569894	s11:1:b3
+4	15:26:47.569894	NOTICE Too much log activity; waiting a second before resuming tailing
+5	15:26:48.820888	s11:1:probe
+6	15:26:49.071797	s11:2:b1
+7	15:26:49.071798	s11:2:b2
+8	15:26:49.071801	s11:2:b3
+9	15:26:49.071807	NOTICE Too much log activity; waiting a second before resuming tailing
+10	15:26:50.322704	s11:2:probe
+11	15:26:50.573320	s11:3:b1
+12	15:26:50.573321	s11:3:b2
+13	15:26:50.573325	s11:3:b3
+14	15:26:50.573326	NOTICE Too much log activity; waiting a second before resuming tailing
+15	15:26:51.825158	s11:3:probe
+16	15:26:52.075502	s11:4:b1
+17	15:26:52.075503	s11:4:b2
+18	15:26:52.075507	s11:4:b3
+19	15:26:52.075510	NOTICE Too much log activity; waiting a second before resuming tailing
+20	15:26:53.326327	s11:4:probe
+21	15:26:53.576454	s11:5:b1
+22	15:26:53.576455	s11:5:b2
+23	15:26:53.576459	s11:5:b3
+24	15:26:53.576459	NOTICE Too much log activity; waiting a second before resuming tailing
+25	15:26:54.827809	s11:5:probe

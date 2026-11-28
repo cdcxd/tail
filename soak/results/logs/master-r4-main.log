@@ -1,0 +1,121 @@
+=== RUN   TestSoakMatrix
+    soak_matrix_test.go:1271: soak matrix: go1.24.6, POLL_DURATION=250ms, scale=1, out=/tmp/tail-pr1-soak/results/master/r4
+=== RUN   TestSoakMatrix/S01_300_isolated_rotations_rename_and_create_back_to_back
+=== PAUSE TestSoakMatrix/S01_300_isolated_rotations_rename_and_create_back_to_back
+=== RUN   TestSoakMatrix/S02_300_isolated_rotations_replacement_created_300ms_after_rename
+=== PAUSE TestSoakMatrix/S02_300_isolated_rotations_replacement_created_300ms_after_rename
+=== RUN   TestSoakMatrix/S03_300_isolated_rotations_random_0-300ms_pause_seed_1
+=== PAUSE TestSoakMatrix/S03_300_isolated_rotations_random_0-300ms_pause_seed_1
+=== RUN   TestSoakMatrix/S04_slow_consumer_rotated_again_during_drain
+=== PAUSE TestSoakMatrix/S04_slow_consumer_rotated_again_during_drain
+=== RUN   TestSoakMatrix/S05_replacement_deleted_during_drain_recreated_after_500ms
+=== PAUSE TestSoakMatrix/S05_replacement_deleted_during_drain_recreated_after_500ms
+=== RUN   TestSoakMatrix/S06_deleted_with_unread_lines_recreated_after_500ms
+=== PAUSE TestSoakMatrix/S06_deleted_with_unread_lines_recreated_after_500ms
+=== RUN   TestSoakMatrix/S07_in_place_truncation
+=== PAUSE TestSoakMatrix/S07_in_place_truncation
+=== RUN   TestSoakMatrix/S07f_in_place_truncation_written_right_after_reopen
+=== PAUSE TestSoakMatrix/S07f_in_place_truncation_written_right_after_reopen
+=== RUN   TestSoakMatrix/S09a_completelines_old_last_line_completed_right_after_rename
+=== PAUSE TestSoakMatrix/S09a_completelines_old_last_line_completed_right_after_rename
+=== RUN   TestSoakMatrix/S09b_completelines_old_last_line_completed_600ms_after_rename
+=== PAUSE TestSoakMatrix/S09b_completelines_old_last_line_completed_600ms_after_rename
+=== RUN   TestSoakMatrix/S10_maxlinesize_10_long_line_across_snapshot
+=== PAUSE TestSoakMatrix/S10_maxlinesize_10_long_line_across_snapshot
+=== RUN   TestSoakMatrix/S11_rate_limit_cooloff_during_drain
+=== PAUSE TestSoakMatrix/S11_rate_limit_cooloff_during_drain
+=== RUN   TestSoakMatrix/S13_300_back_to_back_rotations_no_wait
+=== PAUSE TestSoakMatrix/S13_300_back_to_back_rotations_no_wait
+=== CONT  TestSoakMatrix/S01_300_isolated_rotations_rename_and_create_back_to_back
+=== CONT  TestSoakMatrix/S13_300_back_to_back_rotations_no_wait
+=== CONT  TestSoakMatrix/S07_in_place_truncation
+=== CONT  TestSoakMatrix/S06_deleted_with_unread_lines_recreated_after_500ms
+=== CONT  TestSoakMatrix/S05_replacement_deleted_during_drain_recreated_after_500ms
+=== CONT  TestSoakMatrix/S04_slow_consumer_rotated_again_during_drain
+=== CONT  TestSoakMatrix/S11_rate_limit_cooloff_during_drain
+=== CONT  TestSoakMatrix/S03_300_isolated_rotations_random_0-300ms_pause_seed_1
+=== CONT  TestSoakMatrix/S10_maxlinesize_10_long_line_across_snapshot
+=== CONT  TestSoakMatrix/S02_300_isolated_rotations_replacement_created_300ms_after_rename
+=== CONT  TestSoakMatrix/S09b_completelines_old_last_line_completed_600ms_after_rename
+=== CONT  TestSoakMatrix/S09a_completelines_old_last_line_completed_right_after_rename
+=== CONT  TestSoakMatrix/S07f_in_place_truncation_written_right_after_reopen
+=== NAME  TestSoakMatrix/S13_300_back_to_back_rotations_no_wait
+    soak_matrix_test.go:1306: S13 300_back_to_back_rotations_no_wait [master] poll=250ms: 2/601 lines delivered, missing 599, dup 0, misordered 0, unexpected 0, notices 0, hangs 0, deaths 0, iters 300, wall 1751ms
+            burst_ms: 11.791757
+            missing_sample: [r1:a g1:a r2:a g2:a r3:a g3:a r4:a g4:a r5:a g5:a]
+            stop_ms: 0.01782
+=== NAME  TestSoakMatrix/S11_rate_limit_cooloff_during_drain
+    soak_matrix_test.go:1306: S11 rate_limit_cooloff_during_drain [master] poll=250ms: 21/36 lines delivered, missing 15, dup 0, misordered 0, unexpected 0, notices 5, hangs 0, deaths 0, iters 5, wall 9140ms
+            missing_sample: [s11:1:w1 s11:1:w2 s11:1:w3 s11:2:w1 s11:2:w2 s11:2:w3 s11:3:w1 s11:3:w2 s11:3:w3 s11:4:w1]
+            stop_ms: 0.01488
+=== NAME  TestSoakMatrix/S10_maxlinesize_10_long_line_across_snapshot
+    soak_matrix_test.go:1306: S10 maxlinesize_10_long_line_across_snapshot [master] poll=250ms: 51/151 lines delivered, missing 100, dup 0, misordered 0, unexpected 0, notices 0, hangs 0, deaths 0, iters 50, wall 14085ms
+            missing_sample: [s10:001:yy 00000001 s10:002:yy 00000002 s10:003:yy 00000003 s10:004:yy 00000004 s10:005:yy 00000005]
+            stop_ms: 0.01284
+=== NAME  TestSoakMatrix/S09a_completelines_old_last_line_completed_right_after_rename
+    soak_matrix_test.go:1306: S09a completelines_old_last_line_completed_right_after_rename [master] poll=250ms: 51/101 lines delivered, missing 50, dup 0, misordered 0, unexpected 0, notices 0, hangs 0, deaths 0, iters 50, wall 14085ms
+            missing_sample: [par0tial1 par1tial2 par2tial3 par3tial4 par4tial5 par5tial6 par6tial7 par7tial8 par8tial9 par9tial10]
+            stop_ms: 0.00705
+=== NAME  TestSoakMatrix/S09b_completelines_old_last_line_completed_600ms_after_rename
+    soak_matrix_test.go:1306: S09b completelines_old_last_line_completed_600ms_after_rename [master] poll=250ms: 31/61 lines delivered, missing 30, dup 0, misordered 0, unexpected 0, notices 0, hangs 0, deaths 0, iters 30, wall 21031ms
+            missing_sample: [par0tial1 par1tial2 par2tial3 par3tial4 par4tial5 par5tial6 par6tial7 par7tial8 par8tial9 par9tial10]
+            stop_ms: 0.01995
+=== NAME  TestSoakMatrix/S06_deleted_with_unread_lines_recreated_after_500ms
+    soak_matrix_test.go:1306: S06 deleted_with_unread_lines_recreated_after_500ms [master] poll=250ms: 61/151 lines delivered, missing 90, dup 0, misordered 0, unexpected 0, notices 0, hangs 0, deaths 0, iters 30, wall 24114ms
+            missing_sample: [s6:1:a1 s6:1:a2 s6:1:a3 s6:2:a1 s6:2:a2 s6:2:a3 s6:3:a1 s6:3:a2 s6:3:a3 s6:4:a1]
+            stop_ms: 0.01793
+=== NAME  TestSoakMatrix/S07_in_place_truncation
+    soak_matrix_test.go:1306: S07 in_place_truncation [master] poll=250ms: 101/101 lines delivered, missing 0, dup 0, misordered 0, unexpected 0, notices 0, hangs 0, deaths 0, iters 50, wall 26620ms
+            stop_ms: 0.01997
+=== NAME  TestSoakMatrix/S07f_in_place_truncation_written_right_after_reopen
+    soak_matrix_test.go:1306: S07f in_place_truncation_written_right_after_reopen [master] poll=250ms: 97/101 lines delivered, missing 4, dup 0, misordered 0, unexpected 0, notices 0, hangs 4, deaths 0, iters 50, wall 37150ms
+            missing_sample: [s7:27:a s7:27:b s7:47:a s7:47:b]
+            stop_ms: 0.019079
+=== NAME  TestSoakMatrix/S01_300_isolated_rotations_rename_and_create_back_to_back
+    soak_matrix_test.go:1306: S01 300_isolated_rotations_rename_and_create_back_to_back [master] poll=250ms: 301/1801 lines delivered, missing 1500, dup 0, misordered 0, unexpected 0, notices 0, hangs 0, deaths 0, iters 300, wall 76782ms
+            missing_sample: [r1:a r1:b r1:c r1:d r1:e r2:a r2:b r2:c r2:d r2:e]
+            rename_to_first_replacement_line_ms: n=300 max=250.0 p90=200.8 mean=200.5
+            rename_to_last_old_line_ms: n=0 max=0.0 p90=0.0 mean=0.0
+            rotations_old_lines_delivered_before_rename: 0
+            rotations_with_all_5_old_lines: 0
+            stop_ms: 0.01344
+=== NAME  TestSoakMatrix/S03_300_isolated_rotations_random_0-300ms_pause_seed_1
+    soak_matrix_test.go:1306: S03 300_isolated_rotations_random_0-300ms_pause_seed_1 [master] poll=250ms: 836/1801 lines delivered, missing 965, dup 0, misordered 0, unexpected 0, notices 0, hangs 0, deaths 0, iters 300, wall 103616ms
+            missing_sample: [r1:a r1:b r1:c r1:d r1:e r3:a r3:b r3:c r3:d r3:e]
+            rename_to_first_replacement_line_ms: n=300 max=251.0 p90=217.8 mean=135.3
+            rename_to_last_old_line_ms: n=1 max=0.1 p90=0.1 mean=0.1
+            rotations_old_lines_delivered_before_rename: 106
+            rotations_with_all_5_old_lines: 107
+            stop_ms: 0.01653
+=== NAME  TestSoakMatrix/S04_slow_consumer_rotated_again_during_drain
+    soak_matrix_test.go:1306: S04 slow_consumer_rotated_again_during_drain [master] poll=250ms: 61/211 lines delivered, missing 150, dup 0, misordered 0, unexpected 0, notices 0, hangs 30, deaths 0, iters 30, wall 108361ms
+            missing_sample: [s4:1:a1 s4:1:a2 s4:1:a3 s4:1:c1 s4:1:c2 s4:2:a1 s4:2:a2 s4:2:a3 s4:2:c1 s4:2:c2]
+            stop_ms: 0.023139
+=== NAME  TestSoakMatrix/S05_replacement_deleted_during_drain_recreated_after_500ms
+    soak_matrix_test.go:1306: S05 replacement_deleted_during_drain_recreated_after_500ms [master] poll=250ms: 61/211 lines delivered, missing 150, dup 0, misordered 0, unexpected 0, notices 0, hangs 30, deaths 0, iters 30, wall 114365ms
+            missing_sample: [s5:1:a1 s5:1:a2 s5:1:a3 s5:1:d1 s5:1:d2 s5:2:a1 s5:2:a2 s5:2:a3 s5:2:d1 s5:2:d2]
+            stop_ms: 0.029509
+=== NAME  TestSoakMatrix/S02_300_isolated_rotations_replacement_created_300ms_after_rename
+    soak_matrix_test.go:1306: S02 300_isolated_rotations_replacement_created_300ms_after_rename [master] poll=250ms: 301/1801 lines delivered, missing 1500, dup 0, misordered 0, unexpected 0, notices 0, hangs 0, deaths 0, iters 300, wall 151965ms
+            missing_sample: [r1:a r1:b r1:c r1:d r1:e r2:a r2:b r2:c r2:d r2:e]
+            rename_to_first_replacement_line_ms: n=300 max=500.1 p90=451.7 mean=451.2
+            rename_to_last_old_line_ms: n=0 max=0.0 p90=0.0 mean=0.0
+            rotations_old_lines_delivered_before_rename: 0
+            rotations_with_all_5_old_lines: 0
+            stop_ms: 0.022869
+--- PASS: TestSoakMatrix (0.00s)
+    --- PASS: TestSoakMatrix/S13_300_back_to_back_rotations_no_wait (1.75s)
+    --- PASS: TestSoakMatrix/S11_rate_limit_cooloff_during_drain (9.14s)
+    --- PASS: TestSoakMatrix/S10_maxlinesize_10_long_line_across_snapshot (14.09s)
+    --- PASS: TestSoakMatrix/S09a_completelines_old_last_line_completed_right_after_rename (14.09s)
+    --- PASS: TestSoakMatrix/S09b_completelines_old_last_line_completed_600ms_after_rename (21.03s)
+    --- PASS: TestSoakMatrix/S06_deleted_with_unread_lines_recreated_after_500ms (24.11s)
+    --- PASS: TestSoakMatrix/S07_in_place_truncation (26.62s)
+    --- PASS: TestSoakMatrix/S07f_in_place_truncation_written_right_after_reopen (37.15s)
+    --- PASS: TestSoakMatrix/S01_300_isolated_rotations_rename_and_create_back_to_back (76.79s)
+    --- PASS: TestSoakMatrix/S03_300_isolated_rotations_random_0-300ms_pause_seed_1 (103.62s)
+    --- PASS: TestSoakMatrix/S04_slow_consumer_rotated_again_during_drain (108.36s)
+    --- PASS: TestSoakMatrix/S05_replacement_deleted_during_drain_recreated_after_500ms (114.37s)
+    --- PASS: TestSoakMatrix/S02_300_isolated_rotations_replacement_created_300ms_after_rename (151.97s)
+PASS
+ok  	github.com/nxadm/tail	151.974s

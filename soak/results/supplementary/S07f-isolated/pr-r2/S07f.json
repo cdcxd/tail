@@ -1,0 +1,26 @@
+{
+ "scenario": "S07f",
+ "name": "in_place_truncation_written_right_after_reopen",
+ "version": "pr",
+ "go_version": "go1.24.6",
+ "poll_ms": 250,
+ "iterations": 50,
+ "expected": 101,
+ "delivered": 99,
+ "missing": 2,
+ "duplicates": 0,
+ "misordered": 0,
+ "unexpected": 0,
+ "notices": 0,
+ "hangs": 2,
+ "deaths": 0,
+ "aborted": false,
+ "wall_ms": 31850.775005,
+ "extra": {
+  "missing_sample": [
+   "s7:5:a",
+   "s7:5:b"
+  ],
+  "stop_ms": 0.026289
+ }
+}

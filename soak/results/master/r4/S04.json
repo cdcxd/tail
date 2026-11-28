@@ -1,0 +1,34 @@
+{
+ "scenario": "S04",
+ "name": "slow_consumer_rotated_again_during_drain",
+ "version": "master",
+ "go_version": "go1.24.6",
+ "poll_ms": 250,
+ "iterations": 30,
+ "expected": 211,
+ "delivered": 61,
+ "missing": 150,
+ "duplicates": 0,
+ "misordered": 0,
+ "unexpected": 0,
+ "notices": 0,
+ "hangs": 30,
+ "deaths": 0,
+ "aborted": false,
+ "wall_ms": 108361.413376,
+ "extra": {
+  "missing_sample": [
+   "s4:1:a1",
+   "s4:1:a2",
+   "s4:1:a3",
+   "s4:1:c1",
+   "s4:1:c2",
+   "s4:2:a1",
+   "s4:2:a2",
+   "s4:2:a3",
+   "s4:2:c1",
+   "s4:2:c2"
+  ],
+  "stop_ms": 0.023139
+ }
+}

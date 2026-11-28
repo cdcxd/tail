@@ -1,0 +1,22 @@
+{
+ "scenario": "S07",
+ "name": "in_place_truncation",
+ "version": "master",
+ "go_version": "go1.24.6",
+ "poll_ms": 250,
+ "iterations": 50,
+ "expected": 101,
+ "delivered": 101,
+ "missing": 0,
+ "duplicates": 0,
+ "misordered": 0,
+ "unexpected": 0,
+ "notices": 0,
+ "hangs": 0,
+ "deaths": 0,
+ "aborted": false,
+ "wall_ms": 26618.079486,
+ "extra": {
+  "stop_ms": 0.02042
+ }
+}

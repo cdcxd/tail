@@ -1,0 +1,48 @@
+{
+ "scenario": "S01",
+ "name": "300_isolated_rotations_rename_and_create_back_to_back",
+ "version": "master",
+ "go_version": "go1.24.6",
+ "poll_ms": 250,
+ "iterations": 300,
+ "expected": 1801,
+ "delivered": 301,
+ "missing": 1500,
+ "duplicates": 0,
+ "misordered": 0,
+ "unexpected": 0,
+ "notices": 0,
+ "hangs": 0,
+ "deaths": 0,
+ "aborted": false,
+ "wall_ms": 76786.430395,
+ "extra": {
+  "missing_sample": [
+   "r1:a",
+   "r1:b",
+   "r1:c",
+   "r1:d",
+   "r1:e",
+   "r2:a",
+   "r2:b",
+   "r2:c",
+   "r2:d",
+   "r2:e"
+  ],
+  "rename_to_first_replacement_line_ms": {
+   "n": 300,
+   "max": 251.067805,
+   "p90": 200.786248,
+   "mean": 200.66462711666654
+  },
+  "rename_to_last_old_line_ms": {
+   "n": 0,
+   "max": 0,
+   "p90": 0,
+   "mean": 0
+  },
+  "rotations_old_lines_delivered_before_rename": 0,
+  "rotations_with_all_5_old_lines": 0,
+  "stop_ms": 0.01858
+ }
+}

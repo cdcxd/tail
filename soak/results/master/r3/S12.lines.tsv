@@ -1,0 +1,60 @@
+0	15:29:34.854480	s12:Stop:1:a
+1	15:29:34.854481	s12:Stop:1:b
+2	15:29:36.854892	NOTICE Too much log activity; waiting a second before resuming tailing
+3	15:29:36.855275	s12:Stop:2:a
+4	15:29:36.855280	s12:Stop:2:b
+5	15:29:38.857227	NOTICE Too much log activity; waiting a second before resuming tailing
+6	15:29:38.857390	s12:Stop:3:a
+7	15:29:38.857392	s12:Stop:3:b
+8	15:29:40.859240	NOTICE Too much log activity; waiting a second before resuming tailing
+9	15:29:40.859364	s12:Stop:4:a
+10	15:29:40.859365	s12:Stop:4:b
+11	15:29:42.862438	NOTICE Too much log activity; waiting a second before resuming tailing
+12	15:29:42.862566	s12:Stop:5:a
+13	15:29:42.862566	s12:Stop:5:b
+14	15:29:44.863785	NOTICE Too much log activity; waiting a second before resuming tailing
+15	15:29:44.863933	s12:Stop:6:a
+16	15:29:44.863934	s12:Stop:6:b
+17	15:29:46.866178	NOTICE Too much log activity; waiting a second before resuming tailing
+18	15:29:46.866333	s12:Stop:7:a
+19	15:29:46.866335	s12:Stop:7:b
+20	15:29:48.868400	NOTICE Too much log activity; waiting a second before resuming tailing
+21	15:29:48.868515	s12:Stop:8:a
+22	15:29:48.868516	s12:Stop:8:b
+23	15:29:50.869426	NOTICE Too much log activity; waiting a second before resuming tailing
+24	15:29:50.869603	s12:Stop:9:a
+25	15:29:50.869604	s12:Stop:9:b
+26	15:29:52.872172	NOTICE Too much log activity; waiting a second before resuming tailing
+27	15:29:52.872310	s12:Stop:10:a
+28	15:29:52.872310	s12:Stop:10:b
+29	15:29:54.873658	NOTICE Too much log activity; waiting a second before resuming tailing
+30	15:29:54.873790	s12:StopAtEOF:1:a
+31	15:29:54.873791	s12:StopAtEOF:1:b
+32	15:29:56.875668	NOTICE Too much log activity; waiting a second before resuming tailing
+33	15:29:56.875800	s12:StopAtEOF:2:a
+34	15:29:56.875800	s12:StopAtEOF:2:b
+35	15:29:58.877189	NOTICE Too much log activity; waiting a second before resuming tailing
+36	15:29:58.877328	s12:StopAtEOF:3:a
+37	15:29:58.877330	s12:StopAtEOF:3:b
+38	15:30:00.877979	NOTICE Too much log activity; waiting a second before resuming tailing
+39	15:30:00.878116	s12:StopAtEOF:4:a
+40	15:30:00.878117	s12:StopAtEOF:4:b
+41	15:30:02.879602	NOTICE Too much log activity; waiting a second before resuming tailing
+42	15:30:02.879752	s12:StopAtEOF:5:a
+43	15:30:02.879752	s12:StopAtEOF:5:b
+44	15:30:04.881882	NOTICE Too much log activity; waiting a second before resuming tailing
+45	15:30:04.882043	s12:StopAtEOF:6:a
+46	15:30:04.882043	s12:StopAtEOF:6:b
+47	15:30:06.884554	NOTICE Too much log activity; waiting a second before resuming tailing
+48	15:30:06.884676	s12:StopAtEOF:7:a
+49	15:30:06.884676	s12:StopAtEOF:7:b
+50	15:30:08.887558	NOTICE Too much log activity; waiting a second before resuming tailing
+51	15:30:08.887845	s12:StopAtEOF:8:a
+52	15:30:08.887856	s12:StopAtEOF:8:b
+53	15:30:10.889265	NOTICE Too much log activity; waiting a second before resuming tailing
+54	15:30:10.889416	s12:StopAtEOF:9:a
+55	15:30:10.889416	s12:StopAtEOF:9:b
+56	15:30:12.892615	NOTICE Too much log activity; waiting a second before resuming tailing
+57	15:30:12.892753	s12:StopAtEOF:10:a
+58	15:30:12.892754	s12:StopAtEOF:10:b
+59	15:30:14.894774	NOTICE Too much log activity; waiting a second before resuming tailing
